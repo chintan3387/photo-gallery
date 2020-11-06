@@ -30,6 +30,17 @@ class PhotoList extends React.Component {
             <PhotoCard key={`photocard-${index}`} photo={photo} id={photo.id} photoIndex={index} clickHandler={() => this.setState({isOpen: true, photoIndex: index})} />
         )) : null;
 
+        const photoCaption = result && (
+            <>
+                <span className="caption">Image Courtsey: </span>
+                <a href={`https://www.instagram.com/${result[photoIndex].user.username}`} rel="noreferrer" target='_blank'>{`@${result[photoIndex].user.username}`}</a>
+                <div>
+                    <span>User Bio: </span>
+                    <span>{result[photoIndex].user.bio}</span>
+                </div>
+            </>
+        )
+
         return (
             <>
                 <Masonry 
@@ -50,7 +61,7 @@ class PhotoList extends React.Component {
                         onMovePrevRequest={() => this.setState({ photoIndex: (photoIndex + result.length - 1) % result.length})}
                         clickOutsideToClose={true}
                         reactModalStyle={{margin: 'auto'}}
-                        imageCaption={result[photoIndex].alt_description}
+                        imageCaption={photoCaption}
                     />
                 )}
             </>
